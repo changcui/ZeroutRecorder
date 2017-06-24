@@ -1,3 +1,2 @@
-# 0OutRecording
-hulin is a gay
+# ZeroutRecorder
 Recording App
