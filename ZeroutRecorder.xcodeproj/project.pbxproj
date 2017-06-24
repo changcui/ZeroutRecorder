@@ -24,16 +24,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4285E9DF1EFEDC950068D4B4 /* PBXContainerItemProxy */ = {
+		427C0B621EFF04AB00C939EC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4285E9DA1EFEDC950068D4B4 /* EZAudio.xcodeproj */;
+			containerPortal = 427C0B5D1EFF04AB00C939EC /* EZAudio.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 469F4CF31B749F7800666A46;
 			remoteInfo = EZAudioiOS;
 		};
-		4285E9E11EFEDC950068D4B4 /* PBXContainerItemProxy */ = {
+		427C0B641EFF04AB00C939EC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4285E9DA1EFEDC950068D4B4 /* EZAudio.xcodeproj */;
+			containerPortal = 427C0B5D1EFF04AB00C939EC /* EZAudio.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8A5A4B9C1BBBDCB200A8A048;
 			remoteInfo = EZAudioOSX;
@@ -59,7 +59,7 @@
 		18AE03921EF6C77300151ADC /* photoNoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = photoNoteModel.m; sourceTree = "<group>"; };
 		18E2888F1EF6511B002ED4C2 /* speechRecognizationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = speechRecognizationModel.m; sourceTree = "<group>"; };
 		18E288911EF65144002ED4C2 /* speechRecognizationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speechRecognizationModel.h; sourceTree = "<group>"; };
-		4285E9DA1EFEDC950068D4B4 /* EZAudio.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = EZAudio.xcodeproj; path = ../EZAudio/EZAudio.xcodeproj; sourceTree = "<group>"; };
+		427C0B5D1EFF04AB00C939EC /* EZAudio.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = EZAudio.xcodeproj; sourceTree = "<group>"; };
 		CE743CBD1EFC0900003E49C7 /* drawPath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = drawPath.h; sourceTree = "<group>"; };
 		CE743CBE1EFC0910003E49C7 /* drawPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = drawPath.m; sourceTree = "<group>"; };
 		CE743CC01EFC0923003E49C7 /* drawView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = drawView.h; sourceTree = "<group>"; };
@@ -82,7 +82,7 @@
 		1888EA581EE24BCA00F07D3F = {
 			isa = PBXGroup;
 			children = (
-				4285E9DA1EFEDC950068D4B4 /* EZAudio.xcodeproj */,
+				427C0B5D1EFF04AB00C939EC /* EZAudio.xcodeproj */,
 				1888EA631EE24BCA00F07D3F /* ZeroutRecorder */,
 				1888EA621EE24BCA00F07D3F /* Products */,
 			);
@@ -158,11 +158,11 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		4285E9DB1EFEDC950068D4B4 /* Products */ = {
+		427C0B5E1EFF04AB00C939EC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4285E9E01EFEDC950068D4B4 /* EZAudioiOS.framework */,
-				4285E9E21EFEDC950068D4B4 /* EZAudioOSX.framework */,
+				427C0B631EFF04AB00C939EC /* EZAudioiOS.framework */,
+				427C0B651EFF04AB00C939EC /* EZAudioOSX.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -218,8 +218,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 4285E9DB1EFEDC950068D4B4 /* Products */;
-					ProjectRef = 4285E9DA1EFEDC950068D4B4 /* EZAudio.xcodeproj */;
+					ProductGroup = 427C0B5E1EFF04AB00C939EC /* Products */;
+					ProjectRef = 427C0B5D1EFF04AB00C939EC /* EZAudio.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -230,18 +230,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		4285E9E01EFEDC950068D4B4 /* EZAudioiOS.framework */ = {
+		427C0B631EFF04AB00C939EC /* EZAudioiOS.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = EZAudioiOS.framework;
-			remoteRef = 4285E9DF1EFEDC950068D4B4 /* PBXContainerItemProxy */;
+			remoteRef = 427C0B621EFF04AB00C939EC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4285E9E21EFEDC950068D4B4 /* EZAudioOSX.framework */ = {
+		427C0B651EFF04AB00C939EC /* EZAudioOSX.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = EZAudioOSX.framework;
-			remoteRef = 4285E9E11EFEDC950068D4B4 /* PBXContainerItemProxy */;
+			remoteRef = 427C0B641EFF04AB00C939EC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -387,10 +387,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 2ZC6KG8JJ9;
+				HEADER_SEARCH_PATHS = ../EZAudio;
 				INFOPLIST_FILE = ZeroutRecorder/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -406,10 +408,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 2ZC6KG8JJ9;
+				HEADER_SEARCH_PATHS = ../EZAudio;
 				INFOPLIST_FILE = ZeroutRecorder/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
