@@ -8,25 +8,37 @@
 
 #import "recordViewController.h"
 #import "drawViewController.h"
-
+#import "speechRecognizeController.h"
+#import "textNoteViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "tagTableViewController.h"
+#import "timeAxis.h"
 
-# define COUNTDOWN 60
+# define COUNTDOWN 600
 
 @interface recordViewController () <UIImagePickerControllerDelegate,UINavigationControllerDelegate> {
 
     NSTimer *_timer; //定时器
+    NSTimer * _timerForAxis;
+    int timeAdderForTimeAxis;
     NSInteger countDown;  //倒计时
     NSString * filePath;
+    NSString * fileName;
     NSString * startRecordTime;
+    
+    bool newRecordPrepared;
+    bool newPlayPrepared;
+    
     //vars used to add text note
-    UITextView * textView;
+    //UITextView * textView;
     int noteTime;
     NSString * textNote;
     UIButton * saveButton;
     NSMutableDictionary * textNotePairDictionary;
     NSMutableDictionary * photoNotePairDictionary;
+    NSMutableDictionary * drawNotePairDictionary;
     //NSMutableArray * recordArrays;
+    
     
  //   recordFileTable *recFileTable = [[recordFileTable alloc] init];
 
@@ -34,6 +46,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *noticeLabel;
+@property (strong, nonatomic) IBOutlet timeAxis *timeAxisView;
 
 
 @property (nonatomic, strong) AVAudioSession *session;
@@ -50,7 +63,6 @@
 
 @property (nonatomic, strong) NSURL *recordFileUrl; //文件地址
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @property (weak, nonatomic) UIImage *currentImage;
 
@@ -68,144 +80,244 @@
     self.imagePickerController = [[UIImagePickerController alloc] init];
     self.imagePickerController.delegate = self;
     self.imagePickerController.allowsEditing = YES;
-    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-
+    
+    self.timeAxisView = [self.timeAxisView initParam];
+    self.timeAxisView.rVC = self;
+    if(_playMode == false)
+    {
+        self->newRecordPrepared = true;
+        self->newPlayPrepared = false;
+    }
+    else{
+        self->newPlayPrepared = true;
+        self->newRecordPrepared = false;
+    }
+    
 }
 
 
 
 - (IBAction)startRecord:(id)sender {
     
-    //every time start a new record, reset the textNoteDic
-    textNotePairDictionary = [[NSMutableDictionary alloc] init];
-    photoNotePairDictionary = [[NSMutableDictionary alloc] init];
-    
-    NSLog(@"开始录音");
-
-    countDown = 60;
-    [self addTimer];
-    
-    AVAudioSession *session =[AVAudioSession sharedInstance];
-    NSError *sessionError;
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
-    
-    if (session == nil) {
-        
-        NSLog(@"Error creating session: %@",[sessionError description]);
-        
-    }else{
-        [session setActive:YES error:nil];
-        
+    if(_playMode == true)
+    {
+        [sender setBackgroundColor:[UIColor grayColor]];
+        return ;
     }
     
-    self.session = session;
-    
-    NSDate * date = [NSDate date];//获取当前时间
-    NSDateFormatter *format1 = [[NSDateFormatter alloc]init];
-    [format1 setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-    NSString * tempString = [format1 stringFromDate:date];
-    startRecordTime = [tempString stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-    NSLog(@"%@",startRecordTime);
-    //1.获取沙盒地址
-    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString * tempString2 = [startRecordTime stringByReplacingOccurrencesOfString:@":" withString:@""];
-    filePath = [NSString stringWithFormat:@"%@/rec%@.wav",path,[tempString2 substringWithRange:NSMakeRange(11,6)]];
-    
-    //2.获取文件路径
-    self.recordFileUrl = [NSURL fileURLWithPath:filePath];
-    
-    //设置参数
-    NSDictionary *recordSetting = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                     //采样率  8000/11025/22050/44100/96000（影响音频的质量）
-                                   [NSNumber numberWithFloat: 8000.0],AVSampleRateKey,
-                                   // 音频格式
-                                   [NSNumber numberWithInt: kAudioFormatLinearPCM],AVFormatIDKey,
-                                   //采样位数  8、16、24、32 默认为16
-                                   [NSNumber numberWithInt:16],AVLinearPCMBitDepthKey,
-                                   // 音频通道数 1 或 2
-                                   [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
-                                   //录音质量
-                                   [NSNumber numberWithInt:AVAudioQualityHigh],AVEncoderAudioQualityKey,
-                                   nil];
-
-    
-    _recorder = [[AVAudioRecorder alloc] initWithURL:self.recordFileUrl settings:recordSetting error:nil];
-    
-    if (_recorder) {
-        
-        _recorder.meteringEnabled = YES;
-        [_recorder prepareToRecord];
+    if([_recorder isRecording])
+    {
+        [_recorder  pause];
+        NSLog(@"pause record");
+        newRecordPrepared = false;
+    }
+    else if(newRecordPrepared == false)
+    {
         [_recorder record];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-            [self stopRecord:nil];
-        });
-       // NSLog(@"set ready");
-        
-        
-    }else{
-        NSLog(@"音频格式和文件存储格式不匹配,无法初始化Recorder");
-        
+        NSLog(@"continue record");
     }
+    else
+    {
+        //every time start a new record, reset the textNoteDic
+        timeAdderForTimeAxis = 0;
+        
+        textNotePairDictionary = [[NSMutableDictionary alloc] init];
+        photoNotePairDictionary = [[NSMutableDictionary alloc] init];
+        drawNotePairDictionary = [[NSMutableDictionary alloc] init];
+        _curRecord = [[aRecord alloc] initWithName:textNotePairDictionary
+                                     withPhotoNote:photoNotePairDictionary
+                                      withDrawNote:drawNotePairDictionary];
+        
+        NSLog(@"start record");
+//TODO:
+        countDown = 600;
+        [self addTimer];
+        [self addTimerForAxis];
+        AVAudioSession *session =[AVAudioSession sharedInstance];
+        NSError *sessionError;
+        [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
+        
+        if (session == nil) {
+            
+            NSLog(@"Error creating session: %@",[sessionError description]);
+            
+        }else{
+            [session setActive:YES error:nil];
+            
+        }
+        
+        self.session = session;
+        
+        NSDate * date = [NSDate date];//获取当前时间
+        NSDateFormatter *format1 = [[NSDateFormatter alloc]init];
+        [format1 setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+        NSString * tempString = [format1 stringFromDate:date];
+        startRecordTime = [tempString stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+        NSLog(@"%@",startRecordTime);
+        
+        //1.获取沙盒地址
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString * tempString2 = [startRecordTime stringByReplacingOccurrencesOfString:@":" withString:@""];
+        filePath = [NSString stringWithFormat:@"%@/rec%@.wav",path,[tempString2 substringWithRange:NSMakeRange(11,6)]];
+        
+        //2.获取文件路径
+        self.recordFileUrl = [NSURL fileURLWithPath:filePath];
+        
+        //设置参数
+        NSDictionary *recordSetting = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                         //采样率  8000/11025/22050/44100/96000（影响音频的质量）
+                                       [NSNumber numberWithFloat: 8000.0],AVSampleRateKey,
+                                       // 音频格式
+                                       [NSNumber numberWithInt: kAudioFormatLinearPCM],AVFormatIDKey,
+                                       //采样位数  8、16、24、32 默认为16
+                                       [NSNumber numberWithInt:16],AVLinearPCMBitDepthKey,
+                                       // 音频通道数 1 或 2
+                                       [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
+                                       //录音质量
+                                       [NSNumber numberWithInt:AVAudioQualityHigh],AVEncoderAudioQualityKey,
+                                       nil];
+
+        
+        _recorder = [[AVAudioRecorder alloc] initWithURL:self.recordFileUrl settings:recordSetting error:nil];
+        
+        if (_recorder) {
+            
+            _recorder.meteringEnabled = YES;
+            [_recorder prepareToRecord];
+            [_recorder record];
+            
+            
+ /*           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [self stopRecord:nil];
+            });
+  */
+           // NSLog(@"set ready");
+            
+            
+        }else{
+            NSLog(@"音频格式和文件存储格式不匹配,无法初始化Recorder");
+            
+        }
+        self->newRecordPrepared = false;
+    }
+    self->newPlayPrepared = true;
 }
 
 
-- (IBAction)stopRecord:(id)sender {
+- (IBAction)saveRecord:(id)sender {
+
+    [self.recorder stop];
 
    [self removeTimer];
-    NSLog(@"停止录音");
+    [self removeTimerForAxis];
+    NSLog(@"save record");
     
     if ([self.recorder isRecording]) {
         [self.recorder stop];
     }
     
     
-    NSFileManager *manager = [NSFileManager defaultManager];
-    if ([manager fileExistsAtPath:filePath]){
-        
-        _noticeLabel.text = [NSString stringWithFormat:@"录了 %ld 秒",COUNTDOWN - (long)countDown];
-        
-        //add obj to recordArrays
-        NSString * length = [NSString stringWithFormat:@"%ld",COUNTDOWN - (long)countDown];
+     fileName = [NSString stringWithFormat:@"rec%@.wav",[startRecordTime substringWithRange:NSMakeRange(11,8)]];
+    
 
-        NSString * filename = [NSString stringWithFormat:@"rec%@.wav",[startRecordTime substringWithRange:NSMakeRange(11,8)]];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"请输入录音文件名" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.text = fileName;
+    //    NSLog(@"username==%@",textField.text);
+        textField.delegate = self;
+    }];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+       NSLog(@"the text is %@", [alert textFields][0].text);
+        fileName = [alert textFields][0].text;
         
-        if(_playMode == false){
-       //     NSLog(@"not playMode");
-            aRecord * newrecord = [[aRecord alloc] initWithName:filename withTime:startRecordTime withLength:length withFilePath:filePath withTextNote:textNotePairDictionary withPhotoNote:photoNotePairDictionary];
-        
-            [_recordArrays addObject: newrecord];
+        NSFileManager *manager = [NSFileManager defaultManager];
+        if ([manager fileExistsAtPath:filePath]){
+//TODO:
+            _noticeLabel.text = [NSString stringWithFormat:@"录了 %ld 秒",COUNTDOWN - (long)countDown];
+            
+            //add obj to recordArrays
+            NSString * length = [NSString stringWithFormat:@"%ld",COUNTDOWN - (long)countDown];
+            
+            
+            //fileName = [NSString stringWithFormat:@"rec%@.wav",[startRecordTime substringWithRange:NSMakeRange(11,8)]];
+            
+            if(_playMode == false){
+                [_curRecord setVars:fileName
+                           withTime:startRecordTime
+                         withLength:length
+                       withFilePath:filePath];
+                
+                [_recordArrays addObject: _curRecord];
+            }
+            
+        }else{
+//TODO:
+            _noticeLabel.text = @"最多录600秒";
+            
         }
-        
-    }else{
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"Cancel");
+    }];
+    [alert addAction:cancel];
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
     
-        _noticeLabel.text = @"最多录60秒";
+    self->newRecordPrepared = true;
+   
+  
 
+}
+- (IBAction)abortRecord:(UIButton *)sender {
+    [self removeTimer];
+    [self removeTimerForAxis];
+    NSLog(@"abort the record");
+    if([_recorder deleteRecording] == false)
+    {
+        NSLog(@"fail to delete record!!");
     }
-    
-
-
+    self->newRecordPrepared = true;
 }
 - (IBAction)PlayRecord:(id)sender {
     
-    NSLog(@"播放录音");
+    
     [self.recorder stop];
     
-    if ([self.player isPlaying])return;
-    if(_playMode == false)
+    if ([self.player isPlaying])
     {
-        self.recordFileUrl = [NSURL fileURLWithPath:filePath];
-    }else{
-        self.recordFileUrl = [NSURL fileURLWithPath:[_curRecord getPath]];
+        [self.player pause];
+        self->newPlayPrepared = false;
     }
-    
-    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:self.recordFileUrl error:nil];
-    
-    NSLog(@"%li",self.player.data.length/1024);
-    
-    [self.session setCategory:AVAudioSessionCategoryPlayback error:nil];
-    [self.player play];
+    else if (self->newPlayPrepared == false)
+    {
+        [self.player play];
+    }
+    else
+    {
+        NSLog(@"播放录音");
+        timeAdderForTimeAxis = 0;
+        [self addTimerForAxis];
+        if(_playMode == false)
+        {
+            if (filePath == nil) return ;
+            self.recordFileUrl = [NSURL fileURLWithPath:filePath];
+        }else{
+            self.recordFileUrl = [NSURL fileURLWithPath:[_curRecord getPath]];
+        }
+        NSLog(@"get path done,the path is %@",filePath);
+        if(self.recordFileUrl == nil)
+        {
+            NSLog(@"its nil");
+        }
+        self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:self.recordFileUrl error:nil];
+        
+        NSLog(@"%li",self.player.data.length/1024);
+        
+        [self.session setCategory:AVAudioSessionCategoryPlayback error:nil];
+        [self.player play];
+    //    self->newPlayPrepared = true;
+    }
     
 }
 
@@ -229,87 +341,19 @@
     
 }
 
-
-- (IBAction)voiceRecognization:(UIButton *)sender {
-    speechRecognizationModel * SRM = [[speechRecognizationModel alloc] init];
-    NSString * usableFilePath;
-    if(_playMode == false)
-    {
-        usableFilePath =  filePath;
-    }else{
-        usableFilePath =  [_curRecord getPath];
-    }
-    NSString * result = [SRM startRecognize: usableFilePath];
-    [self showRecognizationResult: result];
-    NSLog(@"%@",result);
-
-}
-
-
-- (void) addUITextView: (NSString *) textContent{
-    
-    textView = [[UITextView alloc]initWithFrame:CGRectMake(30, 450, 260,200)];
-    textView.textColor = [UIColor blackColor];//设置字体的颜色
-    textView.text = textContent;//设置默认的显示文本
-    textView.backgroundColor = [UIColor grayColor];//设置背景颜色
-    textView.font = [UIFont systemFontOfSize:25];//设置字体的大小
-    textView.delegate = self;//设置他的委托方法
-    textView.returnKeyType = UIReturnKeyGo;//键盘返回键的类型
-    textView.keyboardType = UIKeyboardAppearanceDefault;//键盘的类型
-    textView.scrollEnabled = YES;//是否可以拖动
-    textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;//自动适应高度
-    //[self addSubview:_textView];
-    [[self view] addSubview: textView];
-}
-- (void) showRecognizationResult: (NSString *) result{
-    [self addUITextView:result];
-    
-    CGFloat btn_X = 30;
-    CGFloat btn_Y = 410;
-    CGFloat btn_Height = 40;
-    
-    saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [saveButton setFrame:CGRectMake(btn_X, btn_Y, CGRectGetWidth(self.view.frame) - btn_X * 2, btn_Height)];
-    [saveButton setTitle:@"exit" forState:UIControlStateNormal];
-    [saveButton addTarget:self action:@selector(btnClickExit) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:saveButton];
-    
-}
--(void) bynClickExit
+//timerforAxis
+-(void) addTimerForAxis
 {
-    [self->textView removeFromSuperview];
-    [self->saveButton removeFromSuperview];
+    [_timerForAxis invalidate];
+    _timerForAxis = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(reDrawTimeAxis) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_timerForAxis forMode:NSRunLoopCommonModes];
 }
-- (IBAction)addTextNote:(UIButton *)sender {
-    
-    noteTime = COUNTDOWN - countDown;
-    //add a textview
-    NSString * textContent = @"please enter the text note you want to add";
-    [self addUITextView:textContent];
-    
-    //add a button to save the content of textView
-    CGFloat btn_X = 30;
-    CGFloat btn_Y = 410;
-    CGFloat btn_Height = 40;
-    
-    saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [saveButton setFrame:CGRectMake(btn_X, btn_Y, CGRectGetWidth(self.view.frame) - btn_X * 2, btn_Height)];
-    [saveButton setTitle:@"save" forState:UIControlStateNormal];
-    [saveButton addTarget:self action:@selector(btnClickSave) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:saveButton];
-    
-}
-
-
-- (void)btnClickSave
+-(void) removeTimerForAxis
 {
-    self->textNote = self->textView.text;
-    [self->textView removeFromSuperview];
-    [self->saveButton removeFromSuperview];
-    [self->textNotePairDictionary setObject:self->textNote forKey:[NSNumber numberWithInt:self->noteTime]];
-    NSLog(@"the pair of text note is %d, %@",noteTime, textNote);
-}
+    [_timerForAxis invalidate];
+    _timerForAxis = nil;
 
+}
 
 
 - (void)imagePickerController: (UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -317,11 +361,10 @@
     if (!image) {
         image = info[UIImagePickerControllerOriginalImage];
     }
-    self.imageView.image = image;
     self.currentImage = image;
     //add (photo,time) pair to dictionary
-    noteTime = COUNTDOWN - countDown;
-    [self->photoNotePairDictionary setObject:image forKey:[NSNumber numberWithInt:self->noteTime]];
+    noteTime = COUNTDOWN - (int)countDown;
+    [_curRecord addPhotoNote:image withKey:self->noteTime];
     
     [self dismissViewControllerAnimated:YES completion: nil];
 }
@@ -379,24 +422,66 @@
 
 //draw
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    drawViewController *destinationViewController = segue.destinationViewController;
-    noteTime = COUNTDOWN - countDown;
-    drawViewController *drawVC = segue.destinationViewController;
     
-    [drawVC returnImage:^(UIImage *showImage) {
-        self.imageView.image = showImage;
-        [self->photoNotePairDictionary setObject:showImage forKey:[NSNumber numberWithInt:self->noteTime]];
-        NSLog(@"draw time is %d", noteTime);
-    }];
-    
+    if ([segue.identifier  isEqual: @"drawViewSegue"])
+    {
+        noteTime = COUNTDOWN - (int)countDown;
+        drawViewController * drawVC = segue.destinationViewController;
+        
+        [drawVC returnImage:^(UIImage *showImage) {
+//            [self->photoNotePairDictionary setObject:showImage forKey:[NSNumber numberWithInt:self->noteTime]];
+            [_curRecord addDrawNote:showImage withKey:self->noteTime];
+//TODO:
+            NSLog(@"draw time is %d", noteTime);
+        }];
+    }
+    else if ([segue.identifier  isEqual: @"voiceRecognizeSegue"])
+    {
+        [self.recorder stop];
+        speechRecognizeController * destinationVC = segue.destinationViewController;
+        NSString * pathString;
+        if(_playMode == false)
+        {
+            pathString = filePath;
+        }else{
+            pathString = [_curRecord getPath];
+        }
+        [destinationVC setFilePath: pathString];
+        NSLog(@"the path is %@",pathString);
+    }
+    else if([segue.identifier  isEqual: @"textNoteSegue"])
+    {
+        textNoteViewController * textNoteVC = segue.destinationViewController;
+//TODO:
+        noteTime = COUNTDOWN - (int)countDown;
+        textNoteVC->dic = [_curRecord getTextNoteDic];
+        textNoteVC->noteTime = self->noteTime;
+    }else if ([segue.identifier  isEqual: @"tagTableSegue"]){
+        noteTime = COUNTDOWN - (int)countDown;
+        tagTableViewController * tagTableVC  = segue.destinationViewController;
+        tagTableVC.recordSendTime = self->noteTime;
+        tagTableVC.recordSendToTagTVC = _curRecord;
+    }
     
 }
 
-
+-(void)reDrawTimeAxis{
+    if([_recorder isRecording] || [_player isPlaying])
+    {
+        timeAdderForTimeAxis = timeAdderForTimeAxis + 20;
+        [self.timeAxisView setRecord:_curRecord withTime: timeAdderForTimeAxis];
+        [self.timeAxisView setNeedsDisplay];
+    }
+}
 
 -(void)refreshLabelText{
-   countDown --;
-    _noticeLabel.text = [NSString stringWithFormat:@"还剩 %ld 秒",(long)countDown];
+    if([_recorder isRecording])
+    {
+//TODO:
+        countDown --;
+        _noticeLabel.text = [NSString stringWithFormat:@"已经录音 %ld 秒",(long)(COUNTDOWN - countDown)];
+    //    [self.timeAxisView withTime: (double)((long)(COUNTDOWN - countDown)*1000)];
+    }
 }
 
 @end

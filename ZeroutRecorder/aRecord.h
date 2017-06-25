@@ -20,12 +20,25 @@
     NSString * filePath;
     NSMutableDictionary * textNotePairDic;
     NSMutableDictionary * photoNotePairDic;
+    NSMutableDictionary * drawNotePairDic;
     //pair set of <note,time>
     //pair set of <picture,time>
 }
--(id) initWithName:(NSString *)filename withTime:(NSString * ) recordtime withLength:(NSString *) recordlength withFilePath:(NSString *) filepath withTextNote:(NSMutableDictionary *) textDic withPhotoNote:(NSMutableDictionary *) photoDic;
+-(id) initWithName:(NSMutableDictionary *) textDic
+     withPhotoNote:(NSMutableDictionary *) photoDic
+      withDrawNote:(NSMutableDictionary *) drawDic;
+-(void) setVars:(NSString *)filename
+       withTime:(NSString * ) recordtime
+     withLength:(NSString *) recordlength
+   withFilePath:(NSString *) filepath;
 -(NSString *) getName;
 -(NSString *) getTime;
 -(NSString *) getLength;
 -(NSString *) getPath;
+-(void) addTextNote:(NSString *)text withKey:(int) time;
+-(void) addPhotoNote:(UIImage *)photo withKey:(int) time;
+-(void) addDrawNote:(UIImage *)draw withKey:(int) time;
+-(NSMutableDictionary *) getTextNoteDic;
+-(NSMutableDictionary *) getPhotoNoteDic;
+-(NSMutableDictionary *) getDrawNoteDic;
 @end

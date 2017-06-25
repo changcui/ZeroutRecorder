@@ -31,6 +31,15 @@ class recordTableViewCell: UITableViewCell {
             recordFileName.text = tempRecord.getName()
             recordTime.text = tempRecord.getTime()
             recordLength.text = tempRecord.getLength() + " s"
+            
+            if (record?.getPhotoNoteDic().count != 0){
+                recordImage.image = ((record!.getPhotoNoteDic()).allValues)[0] as? UIImage;
+                return ;
+            }
+            if (record?.getDrawNoteDic().count != 0){
+                recordImage.image = ((record!.getDrawNoteDic()).allValues)[0] as? UIImage;
+                return ;
+            }
         }
     }
 }

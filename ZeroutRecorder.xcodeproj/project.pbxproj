@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18170BC41F005A1500606281 /* showDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18170BBF1F005A1500606281 /* showDetailViewController.m */; };
+		18170BC51F005A1500606281 /* tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 18170BC11F005A1500606281 /* tag.m */; };
+		18170BC61F005A1500606281 /* tagTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18170BC31F005A1500606281 /* tagTableViewController.m */; };
+		182615241F000EB000608E1F /* timeAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 182615231F000EB000608E1F /* timeAxis.m */; };
 		1888EA651EE24BCA00F07D3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888EA641EE24BCA00F07D3F /* AppDelegate.swift */; };
 		1888EA6D1EE24BCA00F07D3F /* ZeroutRecorder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1888EA6B1EE24BCA00F07D3F /* ZeroutRecorder.xcdatamodeld */; };
 		1888EA6F1EE24BCA00F07D3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1888EA6E1EE24BCA00F07D3F /* Assets.xcassets */; };
@@ -16,14 +20,23 @@
 		1888EA841EE26C3900F07D3F /* startMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888EA831EE26C3900F07D3F /* startMenuTableViewController.swift */; };
 		1888EA8A1EE2831700F07D3F /* recordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1888EA891EE2831700F07D3F /* recordViewController.m */; };
 		1888EA991EE3A09900F07D3F /* aRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 1888EA981EE3A09900F07D3F /* aRecord.m */; };
+		18ADC2661EFE3ACF008C49EE /* speechRecognizeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ADC2651EFE3ACF008C49EE /* speechRecognizeController.m */; };
+		18ADC2691EFE4B44008C49EE /* textNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ADC2681EFE4B44008C49EE /* textNoteViewController.m */; };
 		18AE03931EF6C77300151ADC /* photoNoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AE03921EF6C77300151ADC /* photoNoteModel.m */; };
-		18E288901EF6511B002ED4C2 /* speechRecognizationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E2888F1EF6511B002ED4C2 /* speechRecognizationModel.m */; };
 		CE743CBF1EFC0910003E49C7 /* drawPath.m in Sources */ = {isa = PBXBuildFile; fileRef = CE743CBE1EFC0910003E49C7 /* drawPath.m */; };
 		CE743CC21EFC095A003E49C7 /* drawView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE743CC11EFC095A003E49C7 /* drawView.m */; };
 		CE743CC51EFC158D003E49C7 /* drawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE743CC41EFC158D003E49C7 /* drawViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18170BBE1F005A1500606281 /* showDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = showDetailViewController.h; sourceTree = SOURCE_ROOT; };
+		18170BBF1F005A1500606281 /* showDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = showDetailViewController.m; sourceTree = SOURCE_ROOT; };
+		18170BC01F005A1500606281 /* tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tag.h; sourceTree = SOURCE_ROOT; };
+		18170BC11F005A1500606281 /* tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tag.m; sourceTree = SOURCE_ROOT; };
+		18170BC21F005A1500606281 /* tagTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tagTableViewController.h; sourceTree = SOURCE_ROOT; };
+		18170BC31F005A1500606281 /* tagTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tagTableViewController.m; sourceTree = SOURCE_ROOT; };
+		182615221F000EB000608E1F /* timeAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timeAxis.h; sourceTree = "<group>"; };
+		182615231F000EB000608E1F /* timeAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = timeAxis.m; sourceTree = "<group>"; };
 		1888EA611EE24BCA00F07D3F /* ZeroutRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroutRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1888EA641EE24BCA00F07D3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1888EA6C1EE24BCA00F07D3F /* ZeroutRecorder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZeroutRecorder.xcdatamodel; sourceTree = "<group>"; };
@@ -38,10 +51,12 @@
 		1888EA891EE2831700F07D3F /* recordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = recordViewController.m; sourceTree = "<group>"; };
 		1888EA971EE3A09900F07D3F /* aRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aRecord.h; sourceTree = "<group>"; };
 		1888EA981EE3A09900F07D3F /* aRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = aRecord.m; sourceTree = "<group>"; };
+		18ADC2641EFE3A84008C49EE /* speechRecognizeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speechRecognizeController.h; sourceTree = "<group>"; };
+		18ADC2651EFE3ACF008C49EE /* speechRecognizeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = speechRecognizeController.m; sourceTree = "<group>"; };
+		18ADC2671EFE4B2A008C49EE /* textNoteViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = textNoteViewController.h; sourceTree = "<group>"; };
+		18ADC2681EFE4B44008C49EE /* textNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = textNoteViewController.m; sourceTree = "<group>"; };
 		18AE03911EF6C74F00151ADC /* photoNoteModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = photoNoteModel.h; sourceTree = "<group>"; };
 		18AE03921EF6C77300151ADC /* photoNoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = photoNoteModel.m; sourceTree = "<group>"; };
-		18E2888F1EF6511B002ED4C2 /* speechRecognizationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = speechRecognizationModel.m; sourceTree = "<group>"; };
-		18E288911EF65144002ED4C2 /* speechRecognizationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speechRecognizationModel.h; sourceTree = "<group>"; };
 		CE743CBD1EFC0900003E49C7 /* drawPath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = drawPath.h; sourceTree = "<group>"; };
 		CE743CBE1EFC0910003E49C7 /* drawPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = drawPath.m; sourceTree = "<group>"; };
 		CE743CC01EFC0923003E49C7 /* drawView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = drawView.h; sourceTree = "<group>"; };
@@ -107,11 +122,13 @@
 				1888EA971EE3A09900F07D3F /* aRecord.h */,
 				1888EA981EE3A09900F07D3F /* aRecord.m */,
 				CE743CBD1EFC0900003E49C7 /* drawPath.h */,
+				182615221F000EB000608E1F /* timeAxis.h */,
+				182615231F000EB000608E1F /* timeAxis.m */,
 				CE743CBE1EFC0910003E49C7 /* drawPath.m */,
 				CE743CC01EFC0923003E49C7 /* drawView.h */,
+				18170BC01F005A1500606281 /* tag.h */,
+				18170BC11F005A1500606281 /* tag.m */,
 				CE743CC11EFC095A003E49C7 /* drawView.m */,
-				18E2888F1EF6511B002ED4C2 /* speechRecognizationModel.m */,
-				18E288911EF65144002ED4C2 /* speechRecognizationModel.h */,
 				18AE03911EF6C74F00151ADC /* photoNoteModel.h */,
 				18AE03921EF6C77300151ADC /* photoNoteModel.m */,
 			);
@@ -123,7 +140,15 @@
 			children = (
 				1888EA831EE26C3900F07D3F /* startMenuTableViewController.swift */,
 				1888EA881EE2831700F07D3F /* recordViewController.h */,
+				18ADC2641EFE3A84008C49EE /* speechRecognizeController.h */,
+				18ADC2651EFE3ACF008C49EE /* speechRecognizeController.m */,
 				1888EA891EE2831700F07D3F /* recordViewController.m */,
+				18170BBE1F005A1500606281 /* showDetailViewController.h */,
+				18170BBF1F005A1500606281 /* showDetailViewController.m */,
+				18170BC21F005A1500606281 /* tagTableViewController.h */,
+				18170BC31F005A1500606281 /* tagTableViewController.m */,
+				18ADC2671EFE4B2A008C49EE /* textNoteViewController.h */,
+				18ADC2681EFE4B44008C49EE /* textNoteViewController.m */,
 				CE743CC31EFC157A003E49C7 /* drawViewController.h */,
 				CE743CC41EFC158D003E49C7 /* drawViewController.m */,
 			);
@@ -213,15 +238,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18170BC51F005A1500606281 /* tag.m in Sources */,
+				18ADC2661EFE3ACF008C49EE /* speechRecognizeController.m in Sources */,
 				1888EA841EE26C3900F07D3F /* startMenuTableViewController.swift in Sources */,
 				CE743CBF1EFC0910003E49C7 /* drawPath.m in Sources */,
 				1888EA991EE3A09900F07D3F /* aRecord.m in Sources */,
 				CE743CC51EFC158D003E49C7 /* drawViewController.m in Sources */,
+				18170BC61F005A1500606281 /* tagTableViewController.m in Sources */,
 				1888EA6D1EE24BCA00F07D3F /* ZeroutRecorder.xcdatamodeld in Sources */,
+				18170BC41F005A1500606281 /* showDetailViewController.m in Sources */,
+				182615241F000EB000608E1F /* timeAxis.m in Sources */,
 				1888EA801EE2524200F07D3F /* recordTableViewCell.swift in Sources */,
 				18AE03931EF6C77300151ADC /* photoNoteModel.m in Sources */,
 				CE743CC21EFC095A003E49C7 /* drawView.m in Sources */,
-				18E288901EF6511B002ED4C2 /* speechRecognizationModel.m in Sources */,
+				18ADC2691EFE4B44008C49EE /* textNoteViewController.m in Sources */,
 				1888EA651EE24BCA00F07D3F /* AppDelegate.swift in Sources */,
 				1888EA8A1EE2831700F07D3F /* recordViewController.m in Sources */,
 			);
@@ -341,11 +371,10 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 2ZC6KG8JJ9;
-				HEADER_SEARCH_PATHS = ../EZAudio;
 				INFOPLIST_FILE = ZeroutRecorder/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sxy.ZeroutRecorder;
+				PRODUCT_BUNDLE_IDENTIFIER = "-400017692.ZeroutRecorder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZeroutRecorder/ZeroutRecorder-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -362,11 +391,10 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 2ZC6KG8JJ9;
-				HEADER_SEARCH_PATHS = ../EZAudio;
 				INFOPLIST_FILE = ZeroutRecorder/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sxy.ZeroutRecorder;
+				PRODUCT_BUNDLE_IDENTIFIER = "-400017692.ZeroutRecorder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZeroutRecorder/ZeroutRecorder-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

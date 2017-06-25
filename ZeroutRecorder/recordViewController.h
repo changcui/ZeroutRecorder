@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "aRecord.h"
-#import "speechRecognizationModel.h"
+//#import "speechRecognizationModel.h"
 @interface recordViewController : UIViewController
 
 

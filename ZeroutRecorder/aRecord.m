@@ -23,19 +23,31 @@
 @end
 */
 @implementation aRecord
--(id) initWithName:(NSString *)filename withTime:(NSString * ) recordtime withLength:(NSString *) recordlength withFilePath:(NSString *) filepath withTextNote:(NSMutableDictionary *) textDic withPhotoNote:(NSMutableDictionary *) photoDic{
+-(id) initWithName:(NSMutableDictionary *) textDic
+     withPhotoNote:(NSMutableDictionary *) photoDic
+      withDrawNote:(NSMutableDictionary *) drawDic{
     self = [super init];
     if (self != nil)
     {
-        fileName = filename;
-        recordTime = recordtime;
-        recordLength = recordlength;
-        filePath = filepath;
+        
         textNotePairDic = textDic;
         photoNotePairDic = photoDic;
+        drawNotePairDic = drawDic;
     }
     return self;
 }
+
+-(void) setVars:(NSString *) filename
+       withTime:(NSString * ) recordtime
+     withLength:(NSString *) recordlength
+   withFilePath:(NSString *) filepath{
+    
+    fileName = filename;
+    recordTime = recordtime;
+    recordLength = recordlength;
+    filePath = filepath;
+}
+
 
 -(NSString *) getName{
     return fileName;
@@ -48,5 +60,29 @@
 }
 -(NSString *) getPath{
     return filePath;
+}
+-(void) addTextNote:(NSString *)text
+            withKey:(int)time
+{
+    [textNotePairDic setObject:text forKey:[NSNumber numberWithInt:time]];
+}
+-(void) addPhotoNote:(UIImage *)photo
+             withKey:(int)time
+    {
+        [photoNotePairDic setObject:photo forKey:[NSNumber numberWithInt:time]];
+    }
+-(void) addDrawNote:(UIImage *)draw
+            withKey:(int) time
+{
+    [drawNotePairDic setObject:draw forKey:[NSNumber numberWithInt:time]];
+}
+-(NSMutableDictionary *) getTextNoteDic{
+    return textNotePairDic;
+}
+-(NSMutableDictionary *) getPhotoNoteDic{
+    return photoNotePairDic;
+}
+-(NSMutableDictionary *) getDrawNoteDic{
+    return drawNotePairDic;
 }
 @end

@@ -36,7 +36,7 @@ class startMenuTableViewController: UITableViewController {
     }
     
     @IBAction func refresh(_ sender: UIRefreshControl) {
-        print ("\(recordArrays.count)")
+ //       print ("\(recordArrays.count)")
         if recordArrays.count != 0{
             for rec in recordArrays
             {
@@ -66,7 +66,43 @@ class startMenuTableViewController: UITableViewController {
         
         return "\(records.count-section)"
     }
- 
+    /*
+    // Override to support conditional editing of the table view.左滑删除
+     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    
+    // Override to support editing the table view.左滑删除
+        func tableView(tableView: UITableView,
+ commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        print("delete table view cell")
+        if editingStyle == .delete {
+            
+            //获取数组中要删除的数据
+            var records_ = self.records[indexPath.row]
+            records_.remove(at: indexPath.row)
+            /*
+            records_.delete { (result) in
+                
+                if(result.isSuccess){
+                    // 根据 result.isSuccess 可以判断是否删除成功
+                    self.todos.removeAtIndex(indexPath.row)
+                    
+                    //删除对应的cell
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                    
+                } else {
+                    if (result.error != nil){
+                        print(result.error?.reason)
+                        // 如果删除失败，可以查看是否当前正确使用了 ACL
+                    }
+                }
+            }
+            */
+        }
+        
+    }*/
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let rVC = segue.destination as? recordViewController
         {
@@ -83,11 +119,12 @@ class startMenuTableViewController: UITableViewController {
                 if let button = sender as? UIButton{
                     if let curCell = button.superview?.superview as? recordTableViewCell{
                         rVC.curRecord = curCell.record;
-                        print ("record send success")
+                        //print ("record send success")
                     }
                 }
             }
         }
     }
+
 
 }
