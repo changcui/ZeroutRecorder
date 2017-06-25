@@ -23,23 +23,6 @@
 		CE743CC51EFC158D003E49C7 /* drawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE743CC41EFC158D003E49C7 /* drawViewController.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		427C0B621EFF04AB00C939EC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 427C0B5D1EFF04AB00C939EC /* EZAudio.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 469F4CF31B749F7800666A46;
-			remoteInfo = EZAudioiOS;
-		};
-		427C0B641EFF04AB00C939EC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 427C0B5D1EFF04AB00C939EC /* EZAudio.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8A5A4B9C1BBBDCB200A8A048;
-			remoteInfo = EZAudioOSX;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		1888EA611EE24BCA00F07D3F /* ZeroutRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroutRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1888EA641EE24BCA00F07D3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -59,7 +42,6 @@
 		18AE03921EF6C77300151ADC /* photoNoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = photoNoteModel.m; sourceTree = "<group>"; };
 		18E2888F1EF6511B002ED4C2 /* speechRecognizationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = speechRecognizationModel.m; sourceTree = "<group>"; };
 		18E288911EF65144002ED4C2 /* speechRecognizationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speechRecognizationModel.h; sourceTree = "<group>"; };
-		427C0B5D1EFF04AB00C939EC /* EZAudio.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = EZAudio.xcodeproj; sourceTree = "<group>"; };
 		CE743CBD1EFC0900003E49C7 /* drawPath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = drawPath.h; sourceTree = "<group>"; };
 		CE743CBE1EFC0910003E49C7 /* drawPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = drawPath.m; sourceTree = "<group>"; };
 		CE743CC01EFC0923003E49C7 /* drawView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = drawView.h; sourceTree = "<group>"; };
@@ -82,7 +64,6 @@
 		1888EA581EE24BCA00F07D3F = {
 			isa = PBXGroup;
 			children = (
-				427C0B5D1EFF04AB00C939EC /* EZAudio.xcodeproj */,
 				1888EA631EE24BCA00F07D3F /* ZeroutRecorder */,
 				1888EA621EE24BCA00F07D3F /* Products */,
 			);
@@ -158,15 +139,6 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		427C0B5E1EFF04AB00C939EC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				427C0B631EFF04AB00C939EC /* EZAudioiOS.framework */,
-				427C0B651EFF04AB00C939EC /* EZAudioOSX.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -216,35 +188,12 @@
 			mainGroup = 1888EA581EE24BCA00F07D3F;
 			productRefGroup = 1888EA621EE24BCA00F07D3F /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 427C0B5E1EFF04AB00C939EC /* Products */;
-					ProjectRef = 427C0B5D1EFF04AB00C939EC /* EZAudio.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				1888EA601EE24BCA00F07D3F /* ZeroutRecorder */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		427C0B631EFF04AB00C939EC /* EZAudioiOS.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = EZAudioiOS.framework;
-			remoteRef = 427C0B621EFF04AB00C939EC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		427C0B651EFF04AB00C939EC /* EZAudioOSX.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = EZAudioOSX.framework;
-			remoteRef = 427C0B641EFF04AB00C939EC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1888EA5F1EE24BCA00F07D3F /* Resources */ = {
