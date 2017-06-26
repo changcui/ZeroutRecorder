@@ -24,7 +24,7 @@
     if ([_showDetailType isEqual:@"picture"]) {
         UIImageView *pictureView = [[UIImageView alloc]initWithImage: _showDetailImage];
         pictureView.frame = self.view.bounds;
-        [pictureView sizeToFit];
+        //[pictureView sizeToFit];
         [self.view addSubview:pictureView];
     }
     if ([_showDetailType isEqual:@"text"]) {
